@@ -1,7 +1,7 @@
 {
-  "name": "@weo-edu/frontend-boilerplate",
+  "name": "frontend-browserify",
   "description": "Frontend boilerplate, browserify style",
-  "repository": "git://github.com/weo-edu/frontend-boilerplate.git",
+  "repository": "git://github.com/weo-edu/frontend-browserify.git",
   "version": "0.1.0",
   "license": "MIT",
   "main": "lib/index.js",

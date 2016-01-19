@@ -5,9 +5,9 @@
 
 Frontend boilerplate, browserify style
 
-## Installation
+## Usage
 
-    $ npm install @weo-edu/frontend-boilerplate
+`npm start`
 
 ## License
 
