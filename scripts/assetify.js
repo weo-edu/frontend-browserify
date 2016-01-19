@@ -8,10 +8,6 @@ import sha from 'sha1'
 import fs from 'fs'
 
 /**
- * Constants
- */
-
-/**
  * Assetify
  */
 
@@ -20,7 +16,9 @@ function assetify ({assets, exts, base = '/assets/'}) {
 
   return {
     browser () {
-      return file => extRe.test(file) ? urify(file) : through()
+      return file => extRe.test(file)
+        ? transform(file)
+        : through()
     },
     node () {
       // hook require
@@ -29,28 +27,31 @@ function assetify ({assets, exts, base = '/assets/'}) {
   }
 
   function handleExt (ext) {
-    return file => {
-      return urify(fs.readFileSync(file))
+    return (module, file) => {
+      return urify(fs.readFileSync(file), file)
     }
   }
 
-  function process (file) {
+  function transform (file) {
     const buffers = []
-    return through (
-      buf => buffers.push(buf),
+    return through(
+      (buf, enc, cb) => {
+        buffers.push(buf)
+        cb()
+      },
       function (cb) {
-        this.push(urify(Buffer.concat(buffers)))
+        this.push(urify(Buffer.concat(buffers), file))
         cb()
       }
     )
   }
 
-  function urify (contents) {
+  function urify (contents, file) {
     const hashed = sha(contents) + path.extname(file)
     const url = path.join(base, hashed)
+    assets[url] = file
 
-    opts.assets[url] = file
-    this.push(`module.exports = "${url}"`)
+    return `module.exports = "${url}"`
   }
 }
 
