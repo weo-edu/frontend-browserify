@@ -1,0 +1,41 @@
+{
+  "name": "@weo-edu/frontend-boilerplate",
+  "description": "Frontend boilerplate, browserify style",
+  "repository": "git://github.com/weo-edu/frontend-boilerplate.git",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node ./scripts/babel.serve.js",
+    "prepublish": "make build",
+    "postpublish": "make clean",
+    "postversion": "git push && git push --tags && npm publish --access=public"
+  },
+  "dependencies": {
+    "@f/domready": "^1.0.0",
+    "@f/foreach-obj": "^1.0.1",
+    "@f/pending-value": "^1.0.0",
+    "babel-polyfill": "^6.3.14",
+    "babel-register": "^6.4.3",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "browserify-hmr": "^0.3.1",
+    "concat-stream": "^1.5.1",
+    "errorify": "^0.3.1",
+    "koa": "^1.1.2",
+    "koa-route": "^2.4.2",
+    "koa-send": "^3.1.0",
+    "redux-effects": "^0.4.3",
+    "redux-multi": "^0.1.12",
+    "sha1": "^1.1.1",
+    "through2": "^2.0.0",
+    "vdux": "^2.1.1",
+    "watchify": "^3.7.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-react-jsx": "^6.4.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-2": "^6.3.13",
+    "tape": "^4.2.0"
+  }
+}
