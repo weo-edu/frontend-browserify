@@ -33,6 +33,7 @@ const b = browserify({
   entries: ['./src/client.js'],
   packageCache: {},
   cache: {},
+  debug: true,
   transform: [babelify, assetify.browser()],
   plugin: [[watchify, {delay: 0}], hmr, errorify]
 })
@@ -54,6 +55,7 @@ function bundle () {
 
 app.use(function *(next) {
   if (this.url === '/bundle.js') {
+    this.type = 'text/javascript'
     this.body = yield js.value()
   } else {
     yield next
@@ -62,7 +64,7 @@ app.use(function *(next) {
 
 app.use(function *(next) {
   if (this.url.startsWith('/assets/')) {
-    if (assets[this.url]) {
+    if (assets[this.url] || this.url) {
       const file = path.relative(process.cwd(), assets[this.url])
       yield send(this, file, {root: process.cwd()})
     } else {
@@ -74,8 +76,7 @@ app.use(function *(next) {
 })
 
 app.use(function *() {
-  const render = require('./render').default
-  this.body = yield render(this.req, assets)
+  this.body = yield require('./render').default(this.req, assets)
 })
 
 /**
@@ -83,5 +84,5 @@ app.use(function *() {
  */
 
 app.listen(3000, function () {
-  console.log('Listening on port ', 3000)
+  console.log('Listening on port', 3000)
 })
