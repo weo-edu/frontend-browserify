@@ -10,11 +10,9 @@ import mlk from './mlk.jpg'
  * Style
  */
 
-const n = 20
 const style = css({
   primary: {
-    color: 'green',
-    fontSize: n
+    color: 'green'
   }
 })
 
